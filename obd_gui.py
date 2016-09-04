@@ -19,7 +19,8 @@ from obd_sensors import *
 #-------------------------------------------------------------------------------
 
 # OBD variables
-BACKGROUND_FILENAME = "honda_pi.jpg"
+LOAD_BACKGROUND_FILENAME = "honda_pi.jpg"
+BACKGROUND_FILENAME = "bg_black.jpg"
 LOGO_FILENAME 		= "cowfish.png"
 
 #-------------------------------------------------------------------------------
@@ -217,7 +218,22 @@ class OBDPanelGauges(wx.Panel):
             if type(value)==float:  
                 value = str("%.2f"%round(value, 3))                    
             t1 = wx.StaticText(parent=self, label=str(value), style=wx.ALIGN_CENTER)
-            t1.SetForegroundColour('WHITE')
+            if name == "Engine RPM":
+                if value > 6000.0:
+                    t1.setForegroundColour('RED')
+                elif value > 5000.0:
+                    t1.setForegroundColour('YELLOW')
+                else:
+                    t1.SetForegroundColour('WHITE')
+            elif name == "Vehicle Speed":
+                if value > 80.0:
+                    t1.setForegroundColour('RED')
+                elif value >= 75.0:
+                    t1.setForegroundColour('YELLOW')
+                else:
+                    t1.SetForegroundColour('WHITE')
+            else:
+                t1.SetForegroundColour('WHITE')
             font1 = wx.Font(32, wx.ROMAN, wx.NORMAL, wx.NORMAL, faceName="Monaco")
             t1.SetFont(font1)
             boxSizer.Add(t1, 0, wx.ALIGN_CENTER | wx.ALL, 20)
@@ -251,7 +267,7 @@ class OBDPanelGauges(wx.Panel):
         # Timer for update
         self.timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.refresh, self.timer)
-        self.timer.Start(2000)
+        self.timer.Start(1000)
 
 
     def refresh(self, event):
@@ -313,7 +329,7 @@ class OBDLoadingPanel(wx.Panel):
         super(OBDLoadingPanel, self).__init__(*args, **kwargs)
 
         # Background image
-        image = wx.Image(BACKGROUND_FILENAME) 
+        image = wx.Image(LOAD_BACKGROUND_FILENAME)
         width, height = wx.GetDisplaySize() 
         image = image.Scale(width, height, wx.IMAGE_QUALITY_HIGH)
         self.bitmap = wx.BitmapFromImage(image) 
