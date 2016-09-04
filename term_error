@@ -1,0 +1,28 @@
+root@raspberrypi:/home/pi/pyobd-pi# python obd_gui.py 
+['/dev/ttyUSB0']
+Opening interface (serial port)
+Interface successfully /dev/ttyUSB0 opened
+Connecting to ECU...
+atz response:atzELM327 v1.5
+ate0 response:ate0OK
+0100 response:BUS INIT: ERROR
+Connected to /dev/ttyUSB0
+Traceback (most recent call last):
+  File "obd_gui.py", line 394, in connect
+    self.textCtrl.AddText(str(self.c.get_output()))
+  File "obd_gui.py", line 50, in get_output
+    return self.c.capture_data()
+  File "/home/pi/pyobd-pi/obd_capture.py", line 44, in capture_data
+    self.supp = self.port.sensor(0)[1]
+  File "/home/pi/pyobd-pi/obd_io.py", line 226, in sensor
+    r = self.get_sensor_value(sensor)
+  File "/home/pi/pyobd-pi/obd_io.py", line 215, in get_sensor_value
+    data = sensor.value(data)
+  File "/home/pi/pyobd-pi/obd_sensors.py", line 112, in hex_to_bitstring
+    v = eval("0x%s" % i)
+  File "<string>", line 1
+    0xN
+     ^
+SyntaxError: invalid token
+
+
