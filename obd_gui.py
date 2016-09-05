@@ -176,11 +176,11 @@ class OBDPanelGauges(wx.Panel):
 
     def getSensorsToDisplay(self, istart):
         """
-        Get at most 6 sensors to be display on screen.
+        Get at most 3 sensors to be display on screen.
         """
         sensors_display = []
         if istart<len(self.sensors):
-            iend = istart + 6
+            iend = istart + 3
             sensors_display = self.sensors[istart:iend]
         return sensors_display
 
@@ -201,8 +201,8 @@ class OBDPanelGauges(wx.Panel):
         boxSizerMain = wx.BoxSizer(wx.VERTICAL)
 
         # Grid sizer
-        nrows, ncols = 2, 3
-        vgap, hgap = 50, 50
+        nrows, ncols = 1, 3
+        vgap, hgap = 0, 50
         gridSizer = wx.GridSizer(nrows, ncols, vgap, hgap)
 
         # Create a box for each sensor
@@ -218,22 +218,7 @@ class OBDPanelGauges(wx.Panel):
             if type(value)==float:  
                 value = str("%.2f"%round(value, 3))                    
             t1 = wx.StaticText(parent=self, label=str(value), style=wx.ALIGN_CENTER)
-            if name == "Engine RPM":
-                if value > 6000.0:
-                    t1.setForegroundColour('RED')
-                elif value > 5000.0:
-                    t1.setForegroundColour('YELLOW')
-                else:
-                    t1.SetForegroundColour('WHITE')
-            elif name == "Vehicle Speed":
-                if value > 80.0:
-                    t1.setForegroundColour('RED')
-                elif value >= 75.0:
-                    t1.setForegroundColour('YELLOW')
-                else:
-                    t1.SetForegroundColour('WHITE')
-            else:
-                t1.SetForegroundColour('WHITE')
+            t1.SetForegroundColour('WHITE')
             font1 = wx.Font(32, wx.ROMAN, wx.NORMAL, wx.NORMAL, faceName="Monaco")
             t1.SetFont(font1)
             boxSizer.Add(t1, 0, wx.ALIGN_CENTER | wx.ALL, 20)
@@ -251,7 +236,7 @@ class OBDPanelGauges(wx.Panel):
 
         # Add invisible boxes if necessary
         nsensors = len(sensors)
-        for i in range(6-nsensors):
+        for i in range(3-nsensors):
             box = OBDStaticBox(self)
             boxSizer = wx.StaticBoxSizer(box, wx.VERTICAL)
             self.boxes.append(box)
@@ -291,18 +276,18 @@ class OBDPanelGauges(wx.Panel):
 
     def onLeft(self, event):
         """
-        Get data from 6 previous sensors in the list.
+        Get data from 3 previous sensors in the list.
         """
-        istart = self.istart-6 
+        istart = self.istart-3
         if istart<0: istart = 0
         self.istart = istart
         self.ShowSensors()
 
     def onRight(self, event):
         """
-        Get data from 6 next sensors in the list.
+        Get data from 3 next sensors in the list.
         """
-        istart = self.istart+6
+        istart = self.istart+3
         if istart<len(self.sensors):
             self.istart = istart
             self.ShowSensors()
