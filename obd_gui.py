@@ -202,7 +202,7 @@ class OBDPanelGauges(wx.Panel):
 
         # Grid sizer
         nrows, ncols = 1, 3
-        vgap, hgap = 0, 50
+        vgap, hgap = 0, 0
         gridSizer = wx.GridSizer(nrows, ncols, vgap, hgap)
 
         # Create a box for each sensor
@@ -252,7 +252,7 @@ class OBDPanelGauges(wx.Panel):
         # Timer for update
         self.timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.refresh, self.timer)
-        self.timer.Start(1000)
+        self.timer.Start(650)
 
 
     def refresh(self, event):
