@@ -196,11 +196,10 @@ SENSORS = [
     Sensor("o2_sensor_position_b"  , "Loc of O2 sensor" 			, "011D" , cpass            ,""       ),
     Sensor("aux_input"             , "Aux input status"				, "011E" , cpass            ,""       ),
     Sensor("engine_time"           , "Engine Start MIN"				, "011F" , sec_to_min       ,"min"    ),
-    Sensor("engine_mil_time"       , "Engine Run MIL"				, "014D" , sec_to_min       ,"min"    ),
+    Sensor("engine_mil_time"       , "Engine Run MIL"				, "014D" , sec_to_min       ,"min"    ),]
 
     # 'Synthetic' sensors start below
-    Sensor("gear"                  , "Current Gear"                 , ""     , calculate_gear   ,""       )
-    ]
+    #Sensor("gear"                  , "Current Gear"                 , ""     , calculate_gear   ,""       )
      
     
 #___________________________________________________________
