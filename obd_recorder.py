@@ -23,7 +23,15 @@ class OBD_Recorder():
         for item in log_items:
             self.add_log_item(item)
 
-        self.gear_ratios = [34/13, 39/21, 36/23, 27/20, 26/21, 25/22]
+        #self.gear_ratios = [34/13, 39/21, 36/23, 27/20, 26/21, 25/22]
+        # 98 Honda Accord 5 spd manual
+        self.gear_ratios = [(1, 3.285),
+                            (2, 1.807),
+                            (3, 1.193),
+                            (4, 0.903),
+                            (5, 0.685),
+                            ('R', 3.000)]
+
         #log_formatter = logging.Formatter('%(asctime)s.%(msecs).03d,%(message)s', "%H:%M:%S")
 
     def connect(self):

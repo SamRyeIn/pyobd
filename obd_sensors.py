@@ -128,6 +128,33 @@ def hex_to_bitstring(str):
                 bitstring += '0'                
     return bitstring
 
+def calculate_gear(rpm, speed):
+    if speed == "" or speed == 0:
+        return 0
+    if rpm == "" or rpm == 0:
+        return 0
+
+    # 98 Honda Accord 5 spd manual, don't care about reverse
+    gear_ratios = [(1, 3.285),
+                        (2, 1.807),
+                        (3, 1.193),
+                        (4, 0.903),
+                        (5, 0.685)]
+
+    rps = rpm / 60.0
+    mps = (speed * 1.609 * 1000) / 3600
+
+    primary_gear = 85 / 46  # street triple
+    final_drive = 47 / 16
+
+    tyre_circumference = 1.978  # meters
+
+    current_gear_ratio = (rps * tyre_circumference) / (mps * primary_gear * final_drive)
+
+    # print current_gear_ratio
+    gear = min((abs(current_gear_ratio - i), i) for i in self.gear_ratios)[1]
+    return gear
+
 class Sensor:
     def __init__(self, shortName, sensorName, sensorcommand, sensorValueFunction, u):
         self.shortname = shortName
@@ -170,6 +197,9 @@ SENSORS = [
     Sensor("aux_input"             , "Aux input status"				, "011E" , cpass            ,""       ),
     Sensor("engine_time"           , "Engine Start MIN"				, "011F" , sec_to_min       ,"min"    ),
     Sensor("engine_mil_time"       , "Engine Run MIL"				, "014D" , sec_to_min       ,"min"    ),
+
+    # 'Synthetic' sensors start below
+    Sensor("gear"                  , "Current Gear"                 , ""     , calculate_gear   ,""       )
     ]
      
     
